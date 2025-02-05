@@ -10,7 +10,7 @@ namespace WebApi.Messages;
 public class MessagesController(IMessageService messageService, IMessageNotifier messageNotifier) : ControllerBase
 {
 	[HttpPost]
-	public async Task<ActionResult<CreatedResult>> CreateMessageAsync(CreateMessageRequest request)
+	public async Task<IActionResult> CreateMessageAsync(CreateMessageRequest request)
 	{
 		var message = new Message(request.Id, request.Text);
 		await messageService.ProcessMessageAsync(message);

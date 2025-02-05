@@ -10,7 +10,7 @@ namespace Infrastructure.Messages
 		public async Task SaveMessageAsync(Message message)
 		{
 			const string query =
-				$"INSERT INTO Messages (Id, Text, Timestamp) VALUES (@{nameof(MessageEntity.Id)}, @{nameof(MessageEntity.Text)}, @{nameof(MessageEntity.Timestamp)}";
+				$"INSERT INTO Messages (Id, Text, Timestamp) VALUES (@{nameof(MessageEntity.Id)}, @{nameof(MessageEntity.Text)}, @{nameof(MessageEntity.Timestamp)})";
 
 			await using var connection = new NpgsqlConnection(connectionString);
 			await connection.OpenAsync();

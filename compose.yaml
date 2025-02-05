@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres-container
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: database
+      PGPORT: 5532
+    ports:
+      - "5532:5532"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+
+  web:
+    build:
+      context: ./web-app
+      dockerfile: WebApi/Dockerfile
+    container_name: web-app
+    ports:
+      - "5000:8080"
+    depends_on:
+      - postgres
+
+#  angular:
+#    build:
+#      context: ./angular-app
+#      dockerfile: Dockerfile
+#    container_name: angular-app
+#    ports:
+#      - "4200:80"
+#    networks:
+#      - app-network

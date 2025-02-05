@@ -10,11 +10,21 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.1" />
         <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <Content Include="..\..\compose.yaml">
+        <Link>compose.yaml</Link>
+      </Content>
+      <Content Include="..\..\init.sql">
+        <Link>init.sql</Link>
+      </Content>
       <Content Include="..\.gitignore">
         <Link>.gitignore</Link>
+      </Content>
+      <Content Include="..\Dockerfile">
+        <Link>Dockerfile</Link>
       </Content>
     </ItemGroup>
 

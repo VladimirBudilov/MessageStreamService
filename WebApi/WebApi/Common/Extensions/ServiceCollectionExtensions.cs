@@ -5,7 +5,7 @@ public static class ServiceCollectionExtensions
 	public static IServiceCollection AddWebApiLayer(this IServiceCollection services)
 	{
 		services.AddControllers();
-		services.AddOpenApi();
+		services.AddSwaggerGen();
 		return services;
 	}
 }
