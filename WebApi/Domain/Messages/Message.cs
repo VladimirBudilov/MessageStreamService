@@ -1,55 +1,56 @@
-﻿namespace Domain.Messages;
-
-public class Message
+﻿namespace Domain.Messages
 {
-	private int Id { get; set; }
-	private string Text { get; set; }
-	private DateTime Timestamp { get; set; }
-
-	public Message(int id, string text)
+	public class Message
 	{
-		if (id <= 0)
-			throw new ArgumentException("Id must be greater than zero.", nameof(id));
+		private readonly int _id;
+		private string _text;
+		private DateTime _timestamp;
 
-		if (string.IsNullOrWhiteSpace(text))
-			throw new ArgumentException("Message text cannot be empty.", nameof(text));
+		public Message(int id, string text)
+		{
+			if (id <= 0)
+				throw new ArgumentException("Id must be greater than zero.", nameof(id));
 
-		if (text.Length > 128)
-			throw new ArgumentException("Message text cannot exceed 128 characters.", nameof(text));
+			if (string.IsNullOrWhiteSpace(text))
+				throw new ArgumentException("Message text cannot be empty.", nameof(text));
 
-		Id = id;
-		Text = text;
-		Timestamp = DateTime.UtcNow;
-	}
+			if (text.Length > 128)
+				throw new ArgumentException("Message text cannot exceed 128 characters.", nameof(text));
 
-	public void UpdateText(string newText)
-	{
-		if (string.IsNullOrWhiteSpace(newText))
-			throw new ArgumentException("Message text cannot be empty.", nameof(newText));
+			_id = id;
+			_text = text;
+			_timestamp = DateTime.UtcNow;
+		}
 
-		if (newText.Length > 128)
-			throw new ArgumentException("Message text cannot exceed 128 characters.", nameof(newText));
+		public void UpdateText(string newText)
+		{
+			if (string.IsNullOrWhiteSpace(newText))
+				throw new ArgumentException("Message text cannot be empty.", nameof(newText));
 
-		Text = newText;
-	}
-	
-	public void UpdateTimestamp(DateTime newTimestamp)
-	{
-		if (newTimestamp < Timestamp)
-			throw new ArgumentException("New timestamp cannot be earlier than the current timestamp.", nameof(newTimestamp));
-		
-		Timestamp = newTimestamp;
-	}
-	
-	public override string ToString()
-	{
-		return $"{Timestamp:yyyy-MM-dd HH:mm:ss} [{Id}]: {Text}";
-	}
-	
-	public void Deconstruct(out int id, out string text, out DateTime timestamp)
-	{
-		id = Id;
-		text = Text;
-		timestamp = Timestamp;
+			if (newText.Length > 128)
+				throw new ArgumentException("Message text cannot exceed 128 characters.", nameof(newText));
+
+			_text = newText;
+		}
+
+		public void UpdateTimestamp(DateTime newTimestamp)
+		{
+			if (newTimestamp < _timestamp)
+				throw new ArgumentException("New timestamp cannot be earlier than the current timestamp.", nameof(newTimestamp));
+
+			_timestamp = newTimestamp;
+		}
+
+		public override string ToString()
+		{
+			return $"{_timestamp:yyyy-MM-dd HH:mm:ss} [{_id}]: {_text}";
+		}
+
+		public void Deconstruct(out int id, out string text, out DateTime timestamp)
+		{
+			id = _id;
+			text = _text;
+			timestamp = _timestamp;
+		}
 	}
 }

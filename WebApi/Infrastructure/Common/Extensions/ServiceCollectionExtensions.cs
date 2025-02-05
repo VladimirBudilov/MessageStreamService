@@ -11,6 +11,7 @@ public static class ServiceCollectionExtensions
 	public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services,
 		IConfiguration configuration)
 	{
+		services.AddSignalR();
 		services.AddScoped<IMessageNotifier, MessageNotifier>();
 		services.AddScoped<IMessageRepository>(provider =>
 			new MessageRepository(configuration.GetConnectionString("DefaultConnection")!) ??

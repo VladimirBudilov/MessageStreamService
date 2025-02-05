@@ -1,11 +1,12 @@
 ﻿using Domain.Messages;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Infrastructure.Messages;
 
-public class MessageNotifier : IMessageNotifier
+public class MessageNotifier(IHubContext<MessageHub, IMessageHubClient> hubContext) : IMessageNotifier
 {
-	public Task NotifyMessageAsync(Message message)
+	public async Task NotifyMessageAsync(Message message)
 	{
-		throw new NotImplementedException();
+		await hubContext.Clients.All.ReceiveMessage(message.ToString());
 	}
 }
