@@ -1,21 +1,43 @@
+using Application.Common.Extensions;
+using Serilog;
+using Serilog.Events;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+Log.Logger = new LoggerConfiguration()
+	.MinimumLevel.Debug()
+	.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+	.Enrich.FromLogContext()
+	.WriteTo.Console()
+	.CreateLogger();
 
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-	app.MapOpenApi();
+	Log.Information("Starting web application");
+
+	builder.Host.UseSerilog();
+	builder.Services.AddControllers();
+	builder.Services.AddOpenApi();
+	builder.Services.AddApplicationLayer();	
+
+	var app = builder.Build();
+
+	if (app.Environment.IsDevelopment())
+	{
+		app.MapOpenApi();
+	}
+
+	app.UseAuthorization();
+
+	app.MapControllers();
+
+	app.Run();
 }
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch (Exception ex)
+{
+	Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+	Log.CloseAndFlush();
+}

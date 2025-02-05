@@ -1,0 +1,17 @@
+﻿using Domain.Messages;
+
+namespace Application.Messages;
+
+public class MessageService(IMessageRepository messageRepository, IMessageNotifier messageNotifier) : IMessageService
+{
+	public async Task ProcessMessageAsync(Message message)
+	{
+		await messageRepository.SaveMessageAsync(message);
+		await messageNotifier.NotifyMessageAsync(message);
+	}
+
+	public async Task<IEnumerable<Message>> GetMessagesAsync(DateTime from, DateTime to)
+	{
+		return await messageRepository.GetMessagesByDateRangeAsync(from, to);
+	}
+}
