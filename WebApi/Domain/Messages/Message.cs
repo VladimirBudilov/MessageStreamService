@@ -32,9 +32,24 @@ public class Message
 
 		Text = newText;
 	}
-
+	
+	public void UpdateTimestamp(DateTime newTimestamp)
+	{
+		if (newTimestamp < Timestamp)
+			throw new ArgumentException("New timestamp cannot be earlier than the current timestamp.", nameof(newTimestamp));
+		
+		Timestamp = newTimestamp;
+	}
+	
 	public override string ToString()
 	{
 		return $"{Timestamp:yyyy-MM-dd HH:mm:ss} [{Id}]: {Text}";
+	}
+	
+	public void Deconstruct(out int id, out string text, out DateTime timestamp)
+	{
+		id = Id;
+		text = Text;
+		timestamp = Timestamp;
 	}
 }

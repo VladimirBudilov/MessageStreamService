@@ -19,7 +19,6 @@ try
 	builder.Services.AddControllers();
 	builder.Services.AddOpenApi();
 	builder.Services.AddApplicationLayer();	
-
 	var app = builder.Build();
 
 	if (app.Environment.IsDevelopment())
