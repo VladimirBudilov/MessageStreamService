@@ -1,53 +1,27 @@
-﻿namespace Domain.Messages
+﻿namespace Domain.Messages;
+
+public class Message
 {
-	public class Message
+	public int Id { get; private set; }
+	public string Text { get; private set; }
+	public DateTime Timestamp { get; private set; }
+
+	public Message(int id, string text)
 	{
-		private readonly int _id;
-		private string _text;
-		private DateTime _timestamp;
+		if (id <= 0)
+			throw new InvalidMessageException("Id must be greater than zero.");
 
-		public Message(int id, string text)
-		{
-			if (id <= 0)
-				throw new ArgumentException("Id must be greater than zero.", nameof(id));
+		if (string.IsNullOrWhiteSpace(text))
+			throw new InvalidMessageException("Message text cannot be empty.");
 
-			if (string.IsNullOrWhiteSpace(text))
-				throw new ArgumentException("Message text cannot be empty.", nameof(text));
+		if (text.Length > 128)
+			throw new InvalidMessageException("Message text cannot exceed 128 characters.");
 
-			if (text.Length > 128)
-				throw new ArgumentException("Message text cannot exceed 128 characters.", nameof(text));
-
-			_id = id;
-			_text = text;
-			_timestamp = DateTime.UtcNow;
-		}
-
-		public void UpdateText(string newText)
-		{
-			if (string.IsNullOrWhiteSpace(newText))
-				throw new ArgumentException("Message text cannot be empty.", nameof(newText));
-
-			if (newText.Length > 128)
-				throw new ArgumentException("Message text cannot exceed 128 characters.", nameof(newText));
-
-			_text = newText;
-		}
-
-		public void UpdateTimestamp(DateTime newTimestamp)
-		{
-			_timestamp = newTimestamp;
-		}
-
-		public override string ToString()
-		{
-			return $"{_timestamp:yyyy-MM-dd HH:mm:ss} [{_id}]: {_text}";
-		}
-
-		public void Deconstruct(out int id, out string text, out DateTime timestamp)
-		{
-			id = _id;
-			text = _text;
-			timestamp = _timestamp;
-		}
+		Id = id;
+		Text = text;
+		Timestamp = DateTime.UtcNow;
 	}
+
+	public override string ToString() =>
+		$"{Timestamp:yyyy-MM-dd HH:mm:ss} [{Id}]: {Text}";
 }

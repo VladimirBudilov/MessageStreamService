@@ -1,25 +1,30 @@
 ﻿using System.Data;
 using Domain.Messages;
 using Infrastructure.Common.Extensions;
+using Infrastructure.Mapping;
+using Microsoft.Extensions.Configuration;
 using Npgsql;
 
 namespace Infrastructure.Messages;
 
-public class MessageRepository(string connectionString) : IMessageRepository
+public partial class MessageRepository(IConfiguration configuration, MessageMapper mapper) : IMessageRepository
 {
+	private readonly string _connectionString = configuration.GetConnectionString("DefaultConnection") ??
+	                                           throw new ArgumentNullException(nameof(MessageRepository));
+
 	public async Task SaveMessageAsync(Message message)
 	{
 		const string query =
 			"INSERT INTO Messages (Id, Text, Timestamp) VALUES (@Id, @Text, @Timestamp)";
 
-		await using var connection = new NpgsqlConnection(connectionString);
+		await using var connection = new NpgsqlConnection(_connectionString);
 		await connection.OpenAsync();
 		await using var command = new NpgsqlCommand(query, connection)
 		{
 			CommandType = CommandType.Text
 		};
 
-		var messageEntity = message.ToMessageEntity();
+		var messageEntity = mapper.ToMessageEntity(message);
 		command.Parameters.AddWithValue("Id", messageEntity.Id);
 		command.Parameters.AddWithValue("Text", messageEntity.Text);
 		command.Parameters.AddWithValue("Timestamp", messageEntity.Timestamp);
@@ -32,7 +37,7 @@ public class MessageRepository(string connectionString) : IMessageRepository
 		const string query =
 			"SELECT Id, Text, Timestamp FROM Messages WHERE Timestamp BETWEEN @From AND @To";
 
-		await using var connection = new NpgsqlConnection(connectionString);
+		await using var connection = new NpgsqlConnection(_connectionString);
 		await connection.OpenAsync();
 
 		await using var command = new NpgsqlCommand(query, connection)
@@ -53,6 +58,6 @@ public class MessageRepository(string connectionString) : IMessageRepository
 			row.Field<DateTime>("Timestamp")
 		));
 
-		return entities.Select(entity => entity.ToMessage());
+		return mapper.ToMessage(entities);
 	}
 }

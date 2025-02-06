@@ -1,9 +1,9 @@
-using Application.Common.Extensions;
+using Application.Extensions;
 using Infrastructure.Common.Extensions;
 using Infrastructure.Messages;
 using Serilog;
 using Serilog.Events;
-using WebApi.Common.Extensions;
+using WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,17 +20,20 @@ try
 
 	builder.Host.UseSerilog();
 	builder.Services
-		.AddWebApiLayer()
+		.AddWebApiLayer(builder.Configuration)
 		.AddApplicationLayer()
 		.AddInfrastructureLayer(builder.Configuration);
 
 	var app = builder.Build();
 	
-	app.UseCors("AllowAll");
-	app.UseSwagger();
+	app.MapOpenApi();
 	app.UseSwaggerUI();
+	
+	app.UseCors("AllowAngular");
 	app.MapControllers();
 	app.MapHub<MessageHub>("/messagehub");
+	app.UseExceptionHandler();
+	
 	app.Run();
 }
 catch (Exception ex)

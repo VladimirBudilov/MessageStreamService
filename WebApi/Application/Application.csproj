@@ -16,4 +16,8 @@
       </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Serilog" Version="4.2.1-dev-02337" />
+    </ItemGroup>
+
 </Project>

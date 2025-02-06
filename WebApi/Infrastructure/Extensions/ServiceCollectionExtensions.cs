@@ -13,9 +13,7 @@ public static class ServiceCollectionExtensions
 	{
 		services.AddSignalR();
 		services.AddScoped<IMessageNotifier, MessageNotifier>();
-		services.AddScoped<IMessageRepository>(provider =>
-			new MessageRepository(configuration.GetConnectionString("DefaultConnection")!) ??
-			throw new ArgumentNullException(nameof(MessageRepository)));
+		services.AddScoped<IMessageRepository, MessageRepository>();
 
 		return services;
 	}

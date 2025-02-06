@@ -1,13 +1,13 @@
 ﻿using Domain.Messages;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Common.Extensions;
 using WebApi.Messages.DTOs;
+using MessageMapper = WebApi.Extensions.MessageMapper;
 
 namespace WebApi.Messages;
 
 [ApiController]
 [Route("api/[controller]")]
-public class MessagesController(IMessageService messageService, IMessageNotifier messageNotifier) : ControllerBase
+public class MessagesController(IMessageService messageService, MessageMapper mapper) : ControllerBase
 {
 	[HttpPost]   
 	public async Task<IActionResult> CreateMessageAsync(CreateMessageRequest request)
@@ -18,10 +18,10 @@ public class MessagesController(IMessageService messageService, IMessageNotifier
 	}
 
 	[HttpGet]
-	public async Task<ActionResult<MessageResponse>> GetMessagesAsync([FromQuery]DateTime from, DateTime to)
-	{
+	public async Task<ActionResult<IEnumerable<MessageResponse>>> GetMessagesAsync([FromQuery]DateTime from, DateTime to)
+	{    
 		var messages = await messageService.GetMessagesAsync(from, to);
-		var response = messages.Select(m => m.ToMessageResponse());
+		var response = mapper.ToMessageResponse(messages);
 		return Ok(response);
 	}
 }
