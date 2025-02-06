@@ -9,7 +9,7 @@ namespace WebApi.Messages;
 [Route("api/[controller]")]
 public class MessagesController(IMessageService messageService, IMessageNotifier messageNotifier) : ControllerBase
 {
-	[HttpPost]
+	[HttpPost]   
 	public async Task<IActionResult> CreateMessageAsync(CreateMessageRequest request)
 	{
 		var message = new Message(request.Id, request.Text);
