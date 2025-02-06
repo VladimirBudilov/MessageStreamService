@@ -1,0 +1,31 @@
+<div class="form-container">
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <label for="id">ID:</label>
+    <input
+      id="id"
+      type="number"
+      formControlName="id"
+      placeholder="Enter ID"
+    />
+    <div *ngIf="form.get('id')?.invalid && form.get('id')?.touched">
+      <small *ngIf="form.get('id')?.hasError('required')">ID is required.</small>
+      <small *ngIf="form.get('id')?.hasError('min')">ID must be greater than 0.</small>
+    </div>
+
+    <label for="text">Text:</label>
+    <input
+      id="text"
+      type="text"
+      formControlName="text"
+      placeholder="Enter message text"
+    />
+    <div *ngIf="form.get('text')?.invalid && form.get('text')?.touched">
+      <small *ngIf="form.get('text')?.hasError('required')">Text is required.</small>
+      <small *ngIf="form.get('text')?.hasError('maxlength')">
+        Text cannot exceed 128 characters.
+      </small>
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">Send</button>
+  </form>
+</div>
