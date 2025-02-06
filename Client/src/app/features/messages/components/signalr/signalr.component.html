@@ -1,8 +1,12 @@
 <h3>Notifications will be below</h3>
 <div class="message-container">
-  @for (message of messages(); track $index) {
+  @for (message of messages(); track message.id) {
     <div class="message-item">
-      {{ message }}
+      <span class="message-id">#{{ message.id }}</span>
+      <span class="message-text">{{ message.text }}</span>
+      <span class="message-timestamp">
+        {{ message.timestamp | date:'medium' }}
+      </span>
     </div>
   }
 </div>

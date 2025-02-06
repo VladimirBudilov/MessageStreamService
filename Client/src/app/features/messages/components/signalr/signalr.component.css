@@ -5,6 +5,19 @@
   overflow-y: auto;
 }
 .message-item {
+  display: flex;
+  justify-content: space-between;
   padding: 8px;
   border-bottom: 1px solid #eee;
+}
+.message-id {
+  font-weight: bold;
+  margin-right: 10px;
+}
+.message-text {
+  flex-grow: 1;
+}
+.message-timestamp {
+  color: gray;
+  font-size: 0.8em;
 }

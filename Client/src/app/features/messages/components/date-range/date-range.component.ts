@@ -11,15 +11,11 @@ import {DatePipe} from '@angular/common';
   ],
   styleUrls: ['./date-range.component.css']
 })
-export class DateRangeComponent implements OnInit {
+export class DateRangeComponent {
   recentMessages = signal<MessageResponse[]>([]);
   isLoading = signal(false);
 
   constructor(private http: HttpClient) {}
-
-  ngOnInit() {
-    this.fetchRecentMessages();
-  }
 
   fetchRecentMessages() {
     const now = new Date();

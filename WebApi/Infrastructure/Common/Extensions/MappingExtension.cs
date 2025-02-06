@@ -22,4 +22,11 @@ public static class MappingExtension
 		message.UpdateTimestamp(timestamp);
 		return message;
 	}
+	
+	public static MessageResponse ToMessageResponse(this Message message)
+	{
+		var response =  new MessageResponse();
+		(response.Id, response.Text, response.Timestamp) = (message);
+		return response;
+	}
 }

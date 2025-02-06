@@ -4,7 +4,7 @@ namespace Infrastructure.Messages;
 
 public class MessageHub : Hub<IMessageHubClient>
 {
-	public async Task SendMessageToClients(string message)
+	public async Task SendMessageToClients(MessageResponse message)
 	{
 		await Clients.All.ReceiveMessage(message);
 	}
@@ -12,5 +12,5 @@ public class MessageHub : Hub<IMessageHubClient>
 
 public interface IMessageHubClient
 {
-	Task ReceiveMessage(string message);
+	Task ReceiveMessage(MessageResponse message);
 }
