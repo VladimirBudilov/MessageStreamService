@@ -7,8 +7,9 @@ public class MessageService(IMessageRepository messageRepository, IMessageNotifi
 {
 	public async Task ProcessMessageAsync(Message message)
 	{
-		var existingMessage = await messageRepository.GetMessageByIdAsync(message.Id) ??
-		                      throw new MessageAlreadyExistsException();
+		var existingMessage = await messageRepository.GetMessageByIdAsync(message.Id);
+		if (existingMessage != null)
+			throw new MessageAlreadyExistsException();
 		await messageRepository.SaveMessageAsync(message);
 		await messageNotifier.NotifyMessageAsync(message);
 	}

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import {NgIf} from '@angular/common';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-message-form',
@@ -26,7 +27,7 @@ export class MessageFormComponent {
   submitForm() {
     if (this.form.valid) {
       const message = this.form.value;
-      this.http.post('http://localhost:5000/api/messages', message).subscribe({
+      this.http.post(`${environment.backendUrl}/api/messages`, message).subscribe({
         next: () => {
           alert('Message sent successfully!');
           this.form.reset();

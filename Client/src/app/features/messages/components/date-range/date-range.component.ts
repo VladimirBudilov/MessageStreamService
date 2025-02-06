@@ -2,6 +2,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Component, OnInit, signal} from '@angular/core';
 import {MessageResponse} from '../../models/message-response';
 import {DatePipe} from '@angular/common';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'date-range',
@@ -26,7 +27,7 @@ export class DateRangeComponent {
       .set('to', now.toISOString());
 
     this.isLoading.set(true);
-    this.http.get<MessageResponse[]>('http://localhost:5000/api/messages', {params})
+    this.http.get<MessageResponse[]>(`${environment.backendUrl}/api/messages`, {params})
       .subscribe({
         next: (messages) => {
           this.recentMessages.set(messages);

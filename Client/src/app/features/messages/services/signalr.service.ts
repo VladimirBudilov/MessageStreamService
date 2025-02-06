@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import * as signalR from "@microsoft/signalr";
+import {environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignalrService {
   private hubConnection: signalR.HubConnection = new signalR.HubConnectionBuilder()
-    .withUrl('http://localhost:5000/messagehub')
+    .withUrl(`${environment.backendUrl}/messagehub`)
     .configureLogging(signalR.LogLevel.Information)
     .build();
 
