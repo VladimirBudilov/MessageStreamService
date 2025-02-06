@@ -1,5 +1,5 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
-import {SignalrService} from '../services/signalr.service';
+import {SignalrService} from '../../services/signalr.service';
 
 @Component({
   selector: 'app-signalr',

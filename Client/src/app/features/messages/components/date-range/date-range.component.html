@@ -1,0 +1,18 @@
+<div class="recent-messages-container">
+  <button
+    (click)="fetchRecentMessages()"
+    [disabled]="isLoading()"
+  >
+    {{ isLoading() ? 'Loading...' : 'Get latest messages' }}
+  </button>
+
+  @for (message of recentMessages(); track message.id) {
+    <div class="message-item">
+      <span class="message-id">#{{ message.id }}</span>
+      <span class="message-text">{{ message.text }}</span>
+      <span class="message-timestamp">
+        {{ message.timestamp | date:'medium' }}
+      </span>
+    </div>
+  }
+</div>

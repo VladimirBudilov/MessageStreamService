@@ -18,7 +18,7 @@ public class MessagesController(IMessageService messageService, IMessageNotifier
 	}
 
 	[HttpGet]
-	public async Task<ActionResult<MessageResponse>> GetMessagesAsync(DateTime from, DateTime to)
+	public async Task<ActionResult<MessageResponse>> GetMessagesAsync([FromQuery]DateTime from, DateTime to)
 	{
 		var messages = await messageService.GetMessagesAsync(from, to);
 		var response = messages.Select(m => m.ToMessageResponse());
