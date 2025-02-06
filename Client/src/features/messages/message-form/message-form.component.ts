@@ -26,7 +26,7 @@ export class MessageFormComponent {
   submitForm() {
     if (this.form.valid) {
       const message = this.form.value;
-      this.http.post('/api/messages', message).subscribe({
+      this.http.post('http://localhost:5000/api/messages', message).subscribe({
         next: () => {
           alert('Message sent successfully!');
           this.form.reset();

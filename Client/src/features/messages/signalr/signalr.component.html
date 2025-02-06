@@ -1,2 +1,8 @@
-<h2>SignalR Interaction Page</h2>
-<p>SignalR functionality will go here.</p>
+<h3>Notifications will be below</h3>
+<div class="message-container">
+  @for (message of messages(); track $index) {
+    <div class="message-item">
+      {{ message }}
+    </div>
+  }
+</div>

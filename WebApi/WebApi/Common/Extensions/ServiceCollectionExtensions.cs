@@ -6,6 +6,16 @@ public static class ServiceCollectionExtensions
 	{
 		services.AddControllers();
 		services.AddSwaggerGen();
+		services.AddCors(options =>
+		{
+			options.AddPolicy("AllowAll", builder =>
+			{
+				builder.WithOrigins("http://localhost:4200")
+					.AllowAnyMethod()
+					.AllowAnyHeader()
+					.AllowCredentials();
+			});
+		});
 		return services;
 	}
 }

@@ -35,9 +35,6 @@
 
 		public void UpdateTimestamp(DateTime newTimestamp)
 		{
-			if (newTimestamp < _timestamp)
-				throw new ArgumentException("New timestamp cannot be earlier than the current timestamp.", nameof(newTimestamp));
-
 			_timestamp = newTimestamp;
 		}
 

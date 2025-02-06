@@ -1,5 +1,6 @@
 using Application.Common.Extensions;
 using Infrastructure.Common.Extensions;
+using Infrastructure.Messages;
 using Serilog;
 using Serilog.Events;
 using WebApi.Common.Extensions;
@@ -24,10 +25,12 @@ try
 		.AddInfrastructureLayer(builder.Configuration);
 
 	var app = builder.Build();
-
+	
+	app.UseCors("AllowAll");
 	app.UseSwagger();
 	app.UseSwaggerUI();
 	app.MapControllers();
+	app.MapHub<MessageHub>("/messagehub");
 	app.Run();
 }
 catch (Exception ex)

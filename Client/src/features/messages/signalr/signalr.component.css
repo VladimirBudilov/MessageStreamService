@@ -1,0 +1,10 @@
+.message-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.message-item {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
