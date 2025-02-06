@@ -1,4 +1,5 @@
 ﻿using Domain.Messages;
+using Domain.Messages.Exceptions;
 
 namespace Application.Messages;
 
@@ -6,6 +7,8 @@ public class MessageService(IMessageRepository messageRepository, IMessageNotifi
 {
 	public async Task ProcessMessageAsync(Message message)
 	{
+		var existingMessage = await messageRepository.GetMessageByIdAsync(message.Id) ??
+		                      throw new MessageAlreadyExistsException();
 		await messageRepository.SaveMessageAsync(message);
 		await messageNotifier.NotifyMessageAsync(message);
 	}

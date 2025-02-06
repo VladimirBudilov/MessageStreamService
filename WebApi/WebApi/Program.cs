@@ -21,7 +21,7 @@ try
 	builder.Host.UseSerilog();
 	builder.Services
 		.AddWebApiLayer(builder.Configuration)
-		.AddApplicationLayer()
+		.AddApplicationLayer(Log.Logger)	
 		.AddInfrastructureLayer(builder.Configuration);
 
 	var app = builder.Build();

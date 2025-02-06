@@ -1,4 +1,5 @@
 ﻿using Domain.Messages;
+using Infrastructure.Mapping;
 using Infrastructure.Messages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +15,7 @@ public static class ServiceCollectionExtensions
 		services.AddSignalR();
 		services.AddScoped<IMessageNotifier, MessageNotifier>();
 		services.AddScoped<IMessageRepository, MessageRepository>();
-
+		services.AddSingleton<MessageMapper>();	
 		return services;
 	}
 }

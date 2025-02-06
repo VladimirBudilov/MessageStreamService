@@ -60,4 +60,31 @@ public partial class MessageRepository(IConfiguration configuration, MessageMapp
 
 		return mapper.ToMessage(entities);
 	}
+
+	public async Task<Message?> GetMessageByIdAsync(int messageId)
+	{
+		const string query = "SELECT Id, Text, Timestamp FROM Messages WHERE Id = @Id";
+		await using var connection = new NpgsqlConnection(_connectionString);
+		await connection.OpenAsync();
+		
+		await using var command = new NpgsqlCommand(query, connection)
+		{
+			CommandType = CommandType.Text
+		};
+		
+		command.Parameters.AddWithValue("Id", messageId);
+		await using var reader = await command.ExecuteReaderAsync();
+		if (!await reader.ReadAsync())
+		{
+			return null;
+		}
+		
+		var messageEntity = new MessageEntity(
+			reader.GetInt32(0),
+			reader.GetString(1),
+			reader.GetDateTime(2)
+		);
+		
+		return mapper.ToMessage(messageEntity);
+	}
 }

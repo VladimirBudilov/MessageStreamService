@@ -20,6 +20,7 @@ public static class ServiceCollectionExtensions
 		});
 		services.AddProblemDetails();
 		services.AddExceptionHandler<GlobalExceptionHandler>();
+		services.AddSingleton<MessageMapper>();	
 		return services;
 	}
 }
