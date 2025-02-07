@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:17
@@ -13,7 +11,8 @@ services:
       - "5532:5532"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-
+    networks:
+      - app-network
 
   web:
     build:
@@ -24,6 +23,8 @@ services:
       - "5000:8080"
     depends_on:
       - postgres
+    networks:
+      - app-network
 
   angular:
     build:
@@ -31,6 +32,12 @@ services:
       dockerfile: Dockerfile
     container_name: angular-app
     ports:
-      - "4200:80"
+      - "4200:4200"
+    depends_on:
+      - web
     networks:
       - app-network
+
+networks:
+  app-network:
+    driver: bridge
