@@ -17,7 +17,6 @@ services:
   web:
     build:
       context: ./WebApi
-      dockerfile: Dockerfile
     container_name: web-app
     ports:
       - "5000:8080"
@@ -29,7 +28,6 @@ services:
   angular:
     build:
       context: ./Client
-      dockerfile: Dockerfile
     container_name: angular-app
     ports:
       - "4200:4200"
