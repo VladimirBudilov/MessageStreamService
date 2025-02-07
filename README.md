@@ -37,7 +37,9 @@ This project is a simple messaging service implemented as a test task. The servi
   
 ## How to Run
 
-1. Clone the repository.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/VladimirBudilov/MessageStreamService.git
 2. Ensure Docker is installed and running.
 3. Start the services using the command:
    ```bash
