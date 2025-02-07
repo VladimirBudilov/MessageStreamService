@@ -5,17 +5,17 @@ namespace Application.Messages;
 
 public class LoggingMessageServiceDecorator(IMessageService inner, ILogger logger) : IMessageService
 {
-    public async Task ProcessMessageAsync(Message message)
+    public async Task ProcessAsync(Message message)
     {
         logger.Information("Starting ProcessMessageAsync for message: {MessageId}", message.Id);
-        await inner.ProcessMessageAsync(message);
+        await inner.ProcessAsync(message);
         logger.Information("Finished ProcessMessageAsync for message: {MessageId}", message.Id);
     }
 
-    public async Task<IEnumerable<Message>> GetMessagesAsync(DateTime from, DateTime to)
+    public async Task<IEnumerable<Message>> GetAsync(DateTime from, DateTime to)
     {
         logger.Information("Starting GetMessagesAsync from: {From} to: {To}", from, to);
-        var result = await inner.GetMessagesAsync(from, to);
+        var result = await inner.GetAsync(from, to);
         logger.Information("Finished GetMessagesAsync from: {From} to: {To}", from, to);
         return result;
     }

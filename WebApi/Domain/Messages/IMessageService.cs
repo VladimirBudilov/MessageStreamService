@@ -2,6 +2,6 @@
 
 public interface IMessageService
 {
-	Task ProcessMessageAsync(Message message);
-	Task<IEnumerable<Message>> GetMessagesAsync(DateTime from, DateTime to);
+	Task ProcessAsync(Message message);
+	Task<IEnumerable<Message>> GetAsync(DateTime from, DateTime to);
 }

@@ -2,7 +2,7 @@
 
 public interface IMessageRepository
 {
-	Task SaveMessageAsync(Message message);
-	Task<IEnumerable<Message>> GetMessagesByDateRangeAsync(DateTime from, DateTime to);
-	Task<Message?> GetMessageByIdAsync(int messageId);
+	Task SaveAsync(Message message);
+	Task<IEnumerable<Message>> GetByDateRangeAsync(DateTime from, DateTime to);
+	Task<Message?> GetByIdAsync(int messageId);
 }
