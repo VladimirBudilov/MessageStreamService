@@ -4,8 +4,7 @@ using Infrastructure.Messages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-
-namespace Infrastructure.Common.Extensions;
+namespace Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {

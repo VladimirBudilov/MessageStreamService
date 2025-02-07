@@ -1,5 +1,5 @@
 using Application.Extensions;
-using Infrastructure.Common.Extensions;
+using Infrastructure.Extensions;
 using Infrastructure.Messages;
 using Serilog;
 using Serilog.Events;
@@ -11,7 +11,7 @@ Log.Logger = new LoggerConfiguration()
 	.MinimumLevel.Debug()
 	.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
 	.Enrich.FromLogContext()
-	.WriteTo.Console()
+	.WriteTo.Console(outputTemplate: "{Timestamp:HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
 	.CreateLogger();
 
 try
@@ -21,19 +21,19 @@ try
 	builder.Host.UseSerilog();
 	builder.Services
 		.AddWebApiLayer(builder.Configuration)
-		.AddApplicationLayer(Log.Logger)	
+		.AddApplicationLayer(Log.Logger)
 		.AddInfrastructureLayer(builder.Configuration);
 
 	var app = builder.Build();
-	
-	app.MapOpenApi();
+
+	app.UseSwagger();
 	app.UseSwaggerUI();
-	
+
 	app.UseCors("AllowAngular");
 	app.MapControllers();
 	app.MapHub<MessageHub>("/messagehub");
 	app.UseExceptionHandler();
-	
+
 	app.Run();
 }
 catch (Exception ex)

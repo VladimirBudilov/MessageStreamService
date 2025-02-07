@@ -9,7 +9,7 @@ public class MessageService(IMessageRepository messageRepository, IMessageNotifi
 	{
 		var existingMessage = await messageRepository.GetMessageByIdAsync(message.Id);
 		if (existingMessage != null)
-			throw new MessageAlreadyExistsException();
+			throw new MessageAlreadyExistsException(message.Id);
 		await messageRepository.SaveMessageAsync(message);
 		await messageNotifier.NotifyMessageAsync(message);
 	}

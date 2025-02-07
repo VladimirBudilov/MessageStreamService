@@ -7,7 +7,7 @@ public static class ServiceCollectionExtensions
 	public static IServiceCollection AddWebApiLayer(this IServiceCollection services, IConfiguration configuration)
 	{
 		services.AddControllers();
-		services.AddOpenApi();
+		services.AddSwaggerGen();
 		services.AddCors(options =>
 		{
 			options.AddPolicy("AllowAngular", builder =>

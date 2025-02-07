@@ -10,6 +10,5 @@ public partial class MessageMapper
 	public partial MessageEntity ToMessageEntity(Message message);
 	public partial Message ToMessage(MessageEntity entity);
 	public partial MessageResponse ToMessageResponse(Message message);
-	public partial IEnumerable<MessageResponse> ToMessageResponse(IEnumerable<Message> messages);
 	public partial IEnumerable<Message> ToMessage(IEnumerable<MessageEntity> entities);
 }

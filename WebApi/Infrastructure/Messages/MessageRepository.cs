@@ -1,13 +1,12 @@
 ﻿using System.Data;
 using Domain.Messages;
-using Infrastructure.Common.Extensions;
 using Infrastructure.Mapping;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 
 namespace Infrastructure.Messages;
 
-public partial class MessageRepository(IConfiguration configuration, MessageMapper mapper) : IMessageRepository
+public class MessageRepository(IConfiguration configuration, MessageMapper mapper) : IMessageRepository
 {
 	private readonly string _connectionString = configuration.GetConnectionString("DefaultConnection") ??
 	                                           throw new ArgumentNullException(nameof(MessageRepository));

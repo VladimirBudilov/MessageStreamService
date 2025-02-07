@@ -1,4 +1,6 @@
-﻿namespace Domain.Messages;
+﻿using Domain.Messages.Exceptions;
+
+namespace Domain.Messages;
 
 public class Message
 {
